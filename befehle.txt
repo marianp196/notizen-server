@@ -1,0 +1,3 @@
+dotnet add package Newtonsoft.Json
+dotnet new webapi
+dotnet run

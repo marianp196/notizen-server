@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{category | async}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="notes | async as resolvedNotes">
+    <ion-item *ngFor="let note of resolvedNotes">
+      <ion-label>
+        {{note.content.header}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
