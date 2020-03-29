@@ -14,7 +14,37 @@ namespace notizen_web_api.Controllers
         {
             _logger = logger;
             _notesService = notesService;
-        }      
+        }   
+
+        [HttpPost("[controller]")]
+        public IActionResult Create([FromBody] NoteContent content) {
+            var result = _notesService.Create(content);
+            
+            if (result.Valid) {
+                return Ok(result.Result);
+            } else {
+                return BadRequest(result.Violations);
+            }
+        }   
+
+        [HttpPut("[controller]/{id}")]
+        public IActionResult Update([FromRoute] Guid id, [FromBody] NoteContent content) {
+            var result = _notesService.Update(id, content);
+            
+            if (result.Valid) {
+                return Ok(result.Result);
+            } else {
+                return BadRequest(result.Violations);
+            }
+        }
+
+        [HttpDelete("[controller]/{id}")]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            // ToDo rückmeldung
+            _notesService.DeleteById(id);
+            return Ok();
+        }
 
         [HttpGet("[controller]/{id}")]
         public IActionResult Get([FromRoute] Guid id)
@@ -27,14 +57,6 @@ namespace notizen_web_api.Controllers
             }
         }
 
-        [HttpDelete("[controller]/{id}")]
-        public IActionResult Delete([FromRoute] Guid id)
-        {
-            // ToDo rückmeldung
-            _notesService.DeleteById(id);
-            return Ok();
-        }
-
         [HttpGet("[controller]")]
         public IActionResult Get([FromQuery] string categoryId)
         {
@@ -45,17 +67,6 @@ namespace notizen_web_api.Controllers
             var catgoryIds = new string[] {categoryId};
             var notes = _notesService.GetFilterd(catgoryIds);
             return Ok(notes);           
-        }
-
-        [HttpPost("[controller]")]
-        public IActionResult Create([FromBody] NoteContent content) {
-            var result = _notesService.Create(content);
-            
-            if (result.Valid) {
-                return Ok(result.Result);
-            } else {
-                return BadRequest(result.Violations);
-            }
         }
 
         private readonly INotesService _notesService;

@@ -51,6 +51,12 @@ export class NoteListComponent implements OnInit {
     const result = await modal.onDidDismiss();
 
     if (result.role === 'save') {
+      this.noteService.update(note.id, result.data).subscribe(
+        noter => {
+          this.showToast('Aktualisiert:' + noter.content.header);
+          this.reload();
+        }
+      );
     }
   }
 

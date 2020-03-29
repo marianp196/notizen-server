@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace notizen_web_api.notes
 {
-    public class NoteService : INotesService
+    public class FileNoteService : INotesService
     {
-        public NoteService(string basePath, string fileExtension)
+        public FileNoteService(string basePath, string fileExtension)
         {
             _basePath = basePath;
             _fileExtension = fileExtension;

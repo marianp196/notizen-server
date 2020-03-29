@@ -28,7 +28,7 @@ namespace notizen_web_api
         {
             services.AddControllers();
             services.AddSingleton(typeof(INotesService),
-                        sc => new NoteService("/home/marian/Schreibtisch/notes", ".mcpnote"));
+                        sc => new FileNoteService("/home/marian/Schreibtisch/notes", ".mcpnote"));
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

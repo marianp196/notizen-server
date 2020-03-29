@@ -27,6 +27,11 @@ export class NoteService {
     return this.httpClient.post<Note>('http://localhost:5000/notes', noteContent);
   }
 
+  public update(id: string, noteContent: NoteContent): Observable<Note> {
+    const uri = 'http://localhost:5000/notes/' + id;
+    return this.httpClient.put<Note>(uri, noteContent);
+  }
+
   public delete(note: Note): Observable<any> {
     const uri = 'http://localhost:5000/notes/' + note.id;
     return this.httpClient.delete<any>(uri);
