@@ -112,7 +112,20 @@ namespace notizen_web_api.notes
 
         public IEnumerable<Note> GetFilterd(IList<string> categoryIds)
         {
-            throw new NotImplementedException();
+            if (categoryIds == null) {
+                throw new ArgumentNullException(nameof(categoryIds));
+            }
+            var allNotes = GetAll().ToList();
+
+            return allNotes.Where(note => {
+                return categoryIds.Any(categorySearchedFor => 
+                     categorySearchedFor != null
+                     && note?.Content?.CategoryIds != null
+                     && note.Content.CategoryIds.Any(
+                         categid => categorySearchedFor.ToLower() == categid.ToLower()
+                     )
+                ); // ToDo hier vlt in map konvertieren
+            });
         }
 
         public IEnumerable<Note> GetFilterd(string text)

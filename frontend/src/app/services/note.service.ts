@@ -15,6 +15,14 @@ export class NoteService {
     return this.httpClient.get<Note[]>('http://localhost:5000/notes');
   }
 
+  public getAllByID(categoryId: string): Observable<Note[]> {
+    return this.httpClient.get<Note[]>('http://localhost:5000/notes', {
+      params: {
+        categoryId
+      }
+    });
+  }
+
   public create(noteContent: NoteContent): Observable<Note> {
     return this.httpClient.post<Note>('http://localhost:5000/notes', noteContent);
   }

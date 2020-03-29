@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, first } from 'rxjs/operators';
 import { NoteService } from '../services/note.service';
 import { Note, NoteContent } from '../services/note';
 import { ModalController, ToastController } from '@ionic/angular';
@@ -50,13 +50,15 @@ export class NoteListComponent implements OnInit {
 
   public async create() {
     const noteContent = NoteContent.createDefault();
-    const modal = await this.modalController.create({component: NoteEditComponent, 
+    const modal = await this.modalController.create({component: NoteEditComponent,
       componentProps: {note: noteContent}});
 
     await modal.present();
     const result = await modal.onDidDismiss();
 
     if (result.role === 'save') {
+      const catgoryId = await this.category.pipe(first()).toPromise();
+      result.data['categoryIds'] = [catgoryId]; //ToDo
       this.noteService.create(result.data).subscribe(
         note => {
           this.showTost('Notiz erstellt: ' + note.content.header);
@@ -67,7 +69,9 @@ export class NoteListComponent implements OnInit {
   }
 
   private reload() {
-    this.notes = this.noteService.getAll();
+    this.notes = this.category.pipe(
+      switchMap(category => this.noteService.getAllByID(category))
+    );
   }
 
   private async showTost(message: string) {

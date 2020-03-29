@@ -36,9 +36,14 @@ namespace notizen_web_api.Controllers
         }
 
         [HttpGet("[controller]")]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string categoryId)
         {
-            var notes = _notesService.GetAll();
+            if (categoryId == null) {
+                return Ok(_notesService.GetAll());
+            }
+
+            var catgoryIds = new string[] {categoryId};
+            var notes = _notesService.GetFilterd(catgoryIds);
             return Ok(notes);           
         }
 
