@@ -27,7 +27,7 @@ namespace notizen_web_api.notes
             var violations = note.Validate();
             if (violations.Any())
             {
-                return ManipulateResult.CreateInValid(violations);
+                return ManipulateResult.CreateInvalid(violations);
             }
 
             string path = buildPath(note.Id);
@@ -52,12 +52,27 @@ namespace notizen_web_api.notes
             var violations = note.Validate();
             if (violations.Any())
             {
-                return ManipulateResult.CreateInValid(violations);
+                return ManipulateResult.CreateInvalid(violations);
             }
 
             writeToStorage(note);
 
             return ManipulateResult.CreateValid(note);
+        }
+
+        public void DeleteById(Guid id) {
+            var getResult = GetByID(id);
+            if (!getResult.Found)
+            {
+                throw new KeyNotFoundException(id.ToString());
+            }
+
+            var path = buildPath(id);
+            try {
+                File.Delete(path);
+            } catch(KeyNotFoundException) {
+                throw new KeyNotFoundException(id.ToString());
+            }
         }
 
         public GetResult GetByID(Guid id)

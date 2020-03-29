@@ -7,6 +7,7 @@ namespace notizen_web_api.notes
     {
         ManipulateResult Create(NoteContent noteContent);
         ManipulateResult Update(Guid guid, NoteContent noteContent);
+        void DeleteById(Guid id);
 
         GetResult GetByID(Guid id);
         IEnumerable<Note> GetAll();       
@@ -28,7 +29,7 @@ namespace notizen_web_api.notes
             };
         }
 
-       public static ManipulateResult CreateInValid(IEnumerable<IViolation> violations) {
+       public static ManipulateResult CreateInvalid(IEnumerable<IViolation> violations) {
             return new ManipulateResult() {
                 Valid = false,
                 Result = null,

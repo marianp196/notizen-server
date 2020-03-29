@@ -9,21 +9,27 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NoteListComponent } from './note-list/note-list.component';
-import { NoteEditComponent } from './note-edit/note-edit.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NoteListItemComponent } from './note-list-item/note-list-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NoteEditComponent } from './note-edit/note-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NoteListComponent,
+    NoteEditComponent,
+    NoteListItemComponent
+  ],
+  entryComponents: [
     NoteEditComponent
   ],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

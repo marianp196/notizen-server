@@ -1,3 +1,33 @@
-<p>
-  note-edit works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Note
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="noteGroup" (ngSubmit)="save()">
+    <ion-item>
+      <ion-input placeholder="Title" formControlName="header" autofocus=true></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Tags" formControlName="freeTags" color="secondary"></ion-input>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-textarea rows="15" placeholder="Text" formControlName="text"></ion-textarea>
+    </ion-item>
+  </form>
+</ion-content>

@@ -27,6 +27,14 @@ namespace notizen_web_api.Controllers
             }
         }
 
+        [HttpDelete("[controller]/{id}")]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            // ToDo rückmeldung
+            _notesService.DeleteById(id);
+            return Ok();
+        }
+
         [HttpGet("[controller]")]
         public IActionResult Get()
         {

@@ -1,0 +1,14 @@
+<ion-item button>
+  <ion-label>
+    {{note.content?.header}}
+    <br>
+    <ion-note>
+      <ion-text color="primary">
+        {{note.content?.freeTags}}
+      </ion-text>
+       <!--{{note.freeTags && note.text ? '-' : ''}} 
+       {{note.text}}-->
+    </ion-note>
+  </ion-label>
+  <ion-text slot="end" class="date" color="medium">{{date}}</ion-text>
+</ion-item>

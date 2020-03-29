@@ -10,4 +10,8 @@ export class NoteContent {
     public freeTags: string;
     public header: string;
     public text: string;
+
+    public static createDefault(): NoteContent {
+        return new NoteContent();
+    }
 }
