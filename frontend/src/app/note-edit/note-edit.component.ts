@@ -21,6 +21,7 @@ export class NoteEditComponent implements OnInit {
       header: new FormControl(this.note.header),
       freeTags: new FormControl(this.note.freeTags),
       text: new FormControl(this.note.text),
+      categoryIds: new FormControl(this.note.categoryIds)
     });
   }
 

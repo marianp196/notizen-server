@@ -50,6 +50,7 @@ namespace notizen_web_api.Controllers
         [HttpPost("[controller]")]
         public IActionResult Create([FromBody] NoteContent content) {
             var result = _notesService.Create(content);
+            
             if (result.Valid) {
                 return Ok(result.Result);
             } else {

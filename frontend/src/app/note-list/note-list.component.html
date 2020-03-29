@@ -5,7 +5,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-searchbar mode="ios"></ion-searchbar>
+<ion-searchbar mode="ios" (ionChange)="search($event)"></ion-searchbar>
 <ion-content>
   <ion-list *ngIf="notes | async as resolvedNotes">
     <ion-item-sliding *ngFor="let note of resolvedNotes">
