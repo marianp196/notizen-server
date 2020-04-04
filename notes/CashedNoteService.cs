@@ -22,7 +22,10 @@ namespace notizen_web_api.notes
             {
                 var cache = getInternalCache();
                 var result = _internalNoteService.Create(noteContent);
-                cache.Add(result.Result.Id, result.Result);
+                if (result.Valid)
+                {
+                    cache.Add(result.Result.Id, result.Result);
+                }
                 return result;
             }
         }
@@ -33,7 +36,10 @@ namespace notizen_web_api.notes
             {
                 var cache = getInternalCache();
                 var result = _internalNoteService.Update(id, noteContent);
-                cache.Add(result.Result.Id, result.Result);
+                if (result.Valid)
+                {
+                    cache[result.Result.Id] = result.Result;
+                }
                 return result;
             }
         }
@@ -67,7 +73,7 @@ namespace notizen_web_api.notes
 
         public IEnumerable<Note> GetAll()
         {
-            lock(_lock) 
+            lock (_lock)
             {
                 return getAll();
             }
@@ -80,10 +86,9 @@ namespace notizen_web_api.notes
 
         public IEnumerable<Note> GetFilterd(IList<string> categoryIds)
         {
-            lock(_lock)
-            {                
-                var notes = getAll();
-                return _filterNoteService.GetFilterdByCategories(notes, categoryIds);
+            lock (_lock)
+            {
+                return _filterNoteService.GetFilterdByCategories(getAll(), categoryIds);
             }
         }
 
@@ -92,14 +97,15 @@ namespace notizen_web_api.notes
             throw new NotImplementedException();
         }
 
-        private IEnumerable<Note> getAll() {
+        private IEnumerable<Note> getAll()
+        {
             return getInternalCache().Values.Select(n => n.Clone()).ToList();
         }
 
         private IDictionary<Guid, Note> getInternalCache()
         {
             var now = DateTime.UtcNow;
-            
+
             if (_lastRead == null || now.Subtract(_lastRead.Value).TotalMilliseconds > _cashingTime.TotalMilliseconds)
             {
                 var notes = _internalNoteService.GetAll();
@@ -117,6 +123,5 @@ namespace notizen_web_api.notes
         private readonly object _lock = new object();
         private IDictionary<Guid, Note> _internalCache;
         private DateTime? _lastRead;
-
     }
 }
