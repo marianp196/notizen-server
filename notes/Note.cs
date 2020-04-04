@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace notizen_web_api.notes
 {
@@ -9,6 +10,12 @@ namespace notizen_web_api.notes
         public DateTime? CreationDate {get; set;}
         public DateTime? UpdateDate {get; set;}
         public NoteContent Content {get; set;}
+
+        public Note Clone() 
+        {
+            var json = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<Note>(json);
+        }
 
         public void copyNoteContentFrom(NoteContent content) {
             if (Content == null) {
@@ -20,7 +27,7 @@ namespace notizen_web_api.notes
             Content.Text = content.Text;
         }
 
-        public IEnumerable<IViolation> Validate() {
+        public IEnumerable<IViolation> Validate() { //ToDo IViolation hier raus
             return new List<IViolation>();
         }
 

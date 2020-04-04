@@ -8,10 +8,11 @@ namespace notizen_web_api.notes
 {
     public class FileNoteService : INotesService
     {
-        public FileNoteService(string basePath, string fileExtension)
+        public FileNoteService(FilterNoteService filterNoteService, string basePath, string fileExtension)
         {
             _basePath = basePath;
             _fileExtension = fileExtension;
+            _filterNoteService = filterNoteService ?? throw new ArgumentNullException(nameof(filterNoteService));
         }
 
         public ManipulateResult Create(NoteContent noteContent)
@@ -111,21 +112,9 @@ namespace notizen_web_api.notes
         }
 
         public IEnumerable<Note> GetFilterd(IList<string> categoryIds)
-        {
-            if (categoryIds == null) {
-                throw new ArgumentNullException(nameof(categoryIds));
-            }
+        {           
             var allNotes = GetAll().ToList();
-
-            return allNotes.Where(note => {
-                return categoryIds.Any(categorySearchedFor => 
-                     categorySearchedFor != null
-                     && note?.Content?.CategoryIds != null
-                     && note.Content.CategoryIds.Any(
-                         categid => categorySearchedFor.ToLower() == categid.ToLower()
-                     )
-                ); // ToDo hier vlt in map konvertieren
-            });
+            return _filterNoteService.GetFilterdByCategories(allNotes, categoryIds);
         }
 
         public IEnumerable<Note> GetFilterd(string text)
@@ -164,5 +153,6 @@ namespace notizen_web_api.notes
 
         private readonly string _basePath;
         private readonly string _fileExtension;
+        private FilterNoteService _filterNoteService;
     }
 }
