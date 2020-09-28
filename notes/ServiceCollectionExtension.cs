@@ -5,7 +5,7 @@ namespace notizen_web_api.notes
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddNotes(this IServiceCollection serviceCollection, string basePath, TimeSpan cachingTime)
+        public static IServiceCollection AddNotesCached(this IServiceCollection serviceCollection, string basePath, TimeSpan cachingTime)
         {
             serviceCollection.AddSingleton<FilterNoteService>();
             serviceCollection.AddSingleton(typeof(INotesService), sp => {

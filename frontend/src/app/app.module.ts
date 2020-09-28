@@ -13,13 +13,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NoteListItemComponent } from './note-list-item/note-list-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoteEditComponent } from './note-edit/note-edit.component';
+import { SearchMachineComponent } from './search-machine/search-machine.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NoteListComponent,
     NoteEditComponent,
-    NoteListItemComponent
+    NoteListItemComponent,
+    SearchMachineComponent
   ],
   entryComponents: [
     NoteEditComponent

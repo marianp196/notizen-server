@@ -27,7 +27,7 @@ namespace notizen_web_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddNotes("/home/marian/Schreibtisch/notes", TimeSpan.FromMinutes(10));
+            services.AddNotesCached("/home/marian/Schreibtisch/notes", TimeSpan.FromMinutes(10));
             
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

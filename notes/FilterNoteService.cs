@@ -26,5 +26,18 @@ namespace notizen_web_api.notes
                 ); // ToDo hier vlt in map konvertieren
             });
         } 
+
+        public IEnumerable<Note> GetFilterdByText(IEnumerable<Note> notes, string text)
+        {
+            if (notes == null) {
+                throw new ArgumentNullException(nameof(notes));
+            }
+
+            if (string.IsNullOrEmpty(text)) {
+                return notes;
+            }
+
+            return notes;
+        } 
     }
 }

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       categories.map(category => {
         return {
           title: category,
-          url: 'notes/' + category
+          url: 'notes/category/' + category
         };
     })));
   }

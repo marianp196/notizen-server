@@ -101,7 +101,12 @@ namespace notizen_web_api.notes
 
             foreach (var noteFile in noteFiles)
             {
-                notesResult.Add(readFromFile(noteFile));
+                try {
+                    notesResult.Add(readFromFile(noteFile));
+                } catch (Exception e) {
+                    Console.WriteLine("Could not read " + noteFile, e);
+                    // ToDo Logging
+                }
             }
             return notesResult;
         }
